@@ -31,25 +31,30 @@ app.factory('socket', function ($rootScope) {
 });
 
 
-function MainCtrl($scope, socket) {
+function MainCtrl($scope, socket,$location) {
 	$scope.message = '';
 	$scope.messages = [];
 	$scope.showMessenger=false;
 	$scope.userName='';
 	$scope.toUser='';
-	
+	$scope.pre="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Me: </b>";
+	$scope.newMessage=0;
+	$scope.appname="My Messenger";
+	document.title= "My Messenger";
 	// Tell the server there is a new message
 	$scope.broadcast = function() {
+	$scope.newMessage=0;
+	document.title= $scope.appname;
 		if(!angular.equals($scope.toUser,'') && !angular.equals($scope.userName,'') && !angular.equals($scope.message,'')){
 			socket.emit('broadcast:msg', {message: $scope.message,to:$scope.toUser,from:$scope.userName});
-			$scope.messages.push("Me: "+$scope.message);
+			$scope.messages.unshift($scope.pre+$scope.message);
 			$scope.message = '';
 		}
 	};
 	
 	$scope.login=function(){
 		if(!angular.equals($scope.userName,'')){
-			socket.init(io.connect('http://localhost:2000'));
+			socket.init(io.connect('http://'+$location.host()+':'+$location.port()));
 			socket.emit('user:add', {userName: $scope.userName});
 		
 			$scope.showMessenger=true;
@@ -57,9 +62,21 @@ function MainCtrl($scope, socket) {
 			// When we see a new msg event from the server
 			socket.on($scope.userName, function (data) {
 				for(var i=0;i<data.length;i++){
-					$scope.messages.push(data[i].from+": "+data[i].message);
+					$scope.messages.unshift(data[i].from+": "+data[i].message);
+					$scope.newMessage++;
 				}
+				if($scope.newMessage>0){
+				document.title= "("+$scope.newMessage+") "+$scope.appname ;
+				}
+				
+				
 			});
 		}
 	}
+	window.onfocus=function(){
+		$scope.newMessage=0;
+		document.title= $scope.appname;
+
+	}
+	
 }

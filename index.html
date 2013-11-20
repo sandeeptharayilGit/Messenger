@@ -18,7 +18,7 @@
 			<button ng-click="broadcast()">Broadcast</button>
 		</form>
 		<ul>
-		<li ng-repeat="msg in messages">{{msg}}</li>
+		<li ng-repeat="msg in messages"><span ng-bind-html-unsafe="msg"/> </li>
 		</ul>
 		
 	</div>
