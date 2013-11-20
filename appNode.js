@@ -16,35 +16,40 @@ io.sockets.on('connection', function (socket) {
 	
 	socket.on('broadcast:msg', function(data) {
 	console.log("Message from: "+data.from+", to: "+data.to+", message:"+data.message);
-	
-		if(users.indexOf(data.to)>0){
-			socket.broadcast.emit(data.to, {message:data.message,from:data.from});
+	console.log(users);
+		if(users.indexOf(data.to)>=0){
+			socket.broadcast.emit(data.to, [{message:data.message,from:data.from}]);
 		}else{
 		console.log('User '+data.to+' is not logged in');
+		
 			var offdata= new Array();
 			if(offlineData[data.to] ==undefined){
-			
+			console.log('offlineData[data.to]='+offlineData[data.to]);
 				offdata.push({from:data.from,message:data.message});
 				offlineData[data.to]=offdata;
 			}else {
-			
+			console.log('offlineData[data.to]='+offlineData[data.to]);
 				offdata=offlineData[data.to];
 				if(offdata!=undefined){
 					offdata.push({from:data.from,message:data.message});
 					offlineData[data.to]=offdata
 				}
+				console.log('offlineData[data.to]='+offlineData[data.to]);
 			}
 		}
 	});
 	socket.on('user:add', function(data) {
-		users.push(data.userName);
+	
+		if(users.indexOf(data.userName)<0){
+			users.push(data.userName);
+		}
 		console.log(data.userName +" logged in");
-		console.log("Logged in users Count:-"+ users.length);
+		console.log("Logged in users Count: "+ users.length);
 		
 		// Tell all the other clients (except self) about the new message
 		socket.emit(data.userName,[{ message:'Welcome to WhiteBoard',from:''}]);
 		if(offlineData[data.userName] !=undefined){
-			console.log("before splicing "+offlineData[data.userName])+" from index:"+offlineData.indexOf(data.userName);
+			console.log("before splicing "+offlineData[data.userName]+" from index: "+offlineData.indexOf(data.userName));
 			socket.emit(data.userName, offlineData.splice(offlineData.indexOf(data.userName),1)[0]);
 			console.log("after splicing "+offlineData[data.userName]);
 		}
