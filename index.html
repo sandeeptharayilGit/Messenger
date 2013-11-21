@@ -11,7 +11,7 @@
 	<div ng-hide="showMessenger">
 		<form ng-submit="login()">
 			<label>Username</label>
-			<input type="text" ng-model="userName"/>
+			<input type="text" autofocus ng-model="userName"/>
 			<button ng-click="login()">login</button>
 		</form>
 	</div>
@@ -26,13 +26,11 @@
 		</form>
 		<div style=" height: 300px; overflow: auto; width: 36%; ">
 		<h3>Your Messages</h3>
-			<ul>
-				<li ng-repeat="msg in messages"><span ng-bind-html-unsafe="msg"/> </li>
-			</ul>
+			<div ng-class="msg.from"  ng-repeat="msg in messages"><span ng-bind-html-unsafe="msg.message"/></div>
 		</div>
 		<div style=" height: 283px; overflow: auto; width: 15%; ">
 		<h3>Your friends online..</h3>
-			<div class="shopper_Recap_Btn" ng-click='selectUser(user)' ng-repeat="user in loggedInUsers"><span ng-bind-html-unsafe="user"/> </div>
+			<div class="friends" ng-click='selectUser(user)' ng-repeat="user in loggedInUsers"><span ng-bind-html-unsafe="user"/> </div>
 			
 		</div>
 	</div>
@@ -40,7 +38,7 @@
 	</body>
 	
 	<style>
-	.shopper_Recap_Btn, .shopper_Recap_Btn:HOVER {
+	.friends, .friends:HOVER {
 background: #277FBE;
 color: #ffffff;
 font-family: calibri;
@@ -54,7 +52,37 @@ text-align: center;
 padding-left: 5%;
 cursor:pointer;
 }
-	
+	.me-msg, .me-msg:HOVER {
+background: #277FBE;
+color: #ffffff;
+font-family: calibri;
+text-shadow: none;
+border-radius: 0px;
+-webkit-border-radius: 0px;
+border: 0.1em solid #3598DB;
+margin-bottom: 2%;
+min-width: 84% !important;
+text-align: right;
+padding-right: 14%;
+cursor:pointer;
+}
+
+	.friend-msg, .friend-msg:HOVER {
+background: #4BA346;
+color: #ffffff;
+font-family: calibri;
+text-shadow: none;
+border-radius: 0px;
+-webkit-border-radius: 0px;
+border: 0.1em solid #3598DB;
+margin-bottom: 2%;
+min-width: 84% !important;
+text-align: left;
+padding-left: 5%;
+cursor:pointer;
+}
+
+		
 	
 	</style>
 	

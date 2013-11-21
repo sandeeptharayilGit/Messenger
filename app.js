@@ -50,7 +50,8 @@ function MainCtrl($scope, socket,$location,$document) {
 		document.title= $scope.appname;
 		if(!angular.equals($scope.toUser,'') && !angular.equals($scope.userName,'') && !angular.equals($scope.message,'')){
 			socket.emit('broadcast:msg', {message: $scope.message,to:$scope.toUser,from:$scope.userName});
-			$scope.messages.unshift($scope.pre+$scope.message);
+			$scope.messages.unshift({message:$scope.pre+$scope.message,from:"me-msg"});
+			//$scope.messages.unshift($scope.pre+$scope.message);
 			$scope.message = '';
 		}
 	};
@@ -69,6 +70,7 @@ function MainCtrl($scope, socket,$location,$document) {
 			// When we see a new msg event from the server
 			socket.on($scope.userName.toLowerCase(), function (data) {
 				for(var i=0;i<data.length;i++){
+				$scope.messages.unshift({message:"<b>"+data[i].from+"</b>: "+data[i].message,from:"friend-msg"});
 					$scope.messages.unshift("<b>"+data[i].from+"</b>: "+data[i].message);
 					$scope.newMessage++;
 				}
