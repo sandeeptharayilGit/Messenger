@@ -70,8 +70,13 @@ function MainCtrl($scope, socket,$location,$document) {
 			// When we see a new msg event from the server
 			socket.on($scope.userName.toLowerCase(), function (data) {
 				for(var i=0;i<data.length;i++){
-				$scope.messages.unshift({message:"<b>"+data[i].from+"</b>: "+data[i].message,from:"friend-msg"});
-					$scope.messages.unshift("<b>"+data[i].from+"</b>: "+data[i].message);
+					if(data[i].from==$scope.userName){
+						$scope.messages.unshift({message:"<b>Me</b>: "+data[i].message,from:"me-msg"});
+					}
+					else{
+						$scope.messages.unshift({message:"<b>"+data[i].from+"</b>: "+data[i].message,from:"friend-msg"});
+					}
+					//$scope.messages.unshift("<b>"+data[i].from+"</b>: "+data[i].message);
 					$scope.newMessage++;
 				}
 				if($scope.newMessage>0){

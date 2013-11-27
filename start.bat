@@ -1,1 +1,1 @@
-node appNode.js
+cmd

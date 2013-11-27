@@ -1,0 +1,17 @@
+{
+  "name": "myMessenger",
+  "subdomain": "myMessenger",
+  "scripts": {
+    "start": "appNode.js"
+  },
+  "version": "0.1.0-1",
+  "engines": {
+    "node": "0.10.22"
+  },
+  "dependencies": {
+    "express": "3.4.x",
+    "mongoose": "3.8.x",
+    "socket.io": "0.9.x",
+	"sqlite3": "2.1.19"
+  }
+}
