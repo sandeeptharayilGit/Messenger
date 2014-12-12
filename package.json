@@ -1,0 +1,30 @@
+{
+  "name": "Messenger",
+  "version": "0.0.1",
+  "description": "A messenger app",
+  "main": "app.js",
+  "dependencies": {
+    "socket.io": "~1.2.1",
+    "express": "~4.10.5"
+  },
+  "devDependencies": {
+    "express": "~4.10.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sandeeptharayilGit/Messenger.git"
+  },
+  "keywords": [
+    "messenger",
+    "angularjs",
+    "WebRTC"
+  ],
+  "author": "Sandeep",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/sandeeptharayilGit/Messenger/issues"
+  }
+}
